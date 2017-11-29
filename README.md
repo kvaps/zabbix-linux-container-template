@@ -80,12 +80,3 @@ Wait some time and check the graphics:
 ![](https://cdn-images-1.medium.com/max/1000/1*SEX-o7e65BWT1G98qLNnHg.png)
 
 Job is done!
-
-* [Containers](https://medium.com/tag/containers?source=post)
-* [Zabbix](https://medium.com/tag/zabbix?source=post)
-* [Proxmox](https://medium.com/tag/proxmox?source=post)
-* [Lxc](https://medium.com/tag/lxc?source=post)
-
-By clapping more or less, you can signal to us which stories really stand out.
-
-### [kvaps](https://medium.com/@kvapss)
