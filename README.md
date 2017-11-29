@@ -77,6 +77,8 @@ Next, go to the Configuration → Hosts
 
 Wait some time and check the graphics:
 
+![](https://cdn-images-1.medium.com/max/1000/1*SEX-o7e65BWT1G98qLNnHg.png)
+
 Job is done!
 
 * [Containers](https://medium.com/tag/containers?source=post)
