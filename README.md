@@ -18,7 +18,7 @@ because old one have different output format.
     $ free -V
     free from procps-ng 3.3.10
 
-Edit `/etc/zabbix/zabbix_agentd.conf:`
+Edit `/etc/zabbix/zabbix_agentd.d/zabbix_container.conf`:
 
 Add user parameter for retrieve memory information:
 
@@ -27,6 +27,12 @@ Add user parameter for retrieve memory information:
 Add another one for retrieve swap information:
 
     UserParameter=ct.swap.size[*],free -b | awk '{total=$ 2; used=$ 3; free=$ 4; pfree=($ 4*100/$ 2); pused=($ 3*100/$ 2)}{ if("$1" == "") } $ 1 == "Swap:" { if("$1" == "") {printf("%.0f", free )} else {printf("%.0f", $1 "" )} }'
+
+Add another one for retrieve right CPU load information:
+
+    UserParameter=ct.cpu.load[*],uptime | awk -F'[, ]+' '{avg1=$(NF-2); avg5=$(NF-1); avg15=$(NF)}{print $2/'$(nproc)'}'
+
+Or just download and copy my [zabbix_container.conf](https://github.com/kvaps/zabbix-linux-container-template/blob/master/zabbix_container.conf).
 
 It will provide you support for next parameters:
 
@@ -46,6 +52,9 @@ It will provide you support for next parameters:
     ct.swap.size[pused]
     ct.swap.size[available]
     ct.swap.size[pavailable]
+    ct.cpu.load[percpu,avg1]
+    ct.cpu.load[percpu,avg5]
+    ct.cpu.load[percpu,avg15]
 
 Don’t forget to restart `zabbix-agent.service` after
 
@@ -66,9 +75,9 @@ Go Configuration → Templtes
 * Replace all `system.swap.size` items to `ct.swap.size`:<br> You also need to
 remove commas in key filed here. Example:<br> replace `system.swap.size[,free]`
 to `ct.swap.size[free]`
+* Replace all `system.cpu.load[percpu,*]` items to `ct.cpu.load[percpu,*]`.
 
-Or just download and import [my zabbix
-template](https://github.com/kvaps/zabbix-linux-container-template/blob/master/zbx_linux_container_template.xml).
+Or just download and import [my zabbix template](https://github.com/kvaps/zabbix-linux-container-template/blob/master/zbx_linux_container_template.xml).
 
 Next, go to the Configuration → Hosts
 
