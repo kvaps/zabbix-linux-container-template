@@ -22,11 +22,11 @@ Edit `/etc/zabbix/zabbix_agentd.d/zabbix_container.conf`:
 
 Add user parameter for retrieve memory information:
 
-    UserParameter=ct.memory.size[*],free -b | awk '{total=$ 2; used=($ 3+$ 5); pused=(($ 3+$ 5)*100/$ 2); free=$ 4; pfree=($ 4*100/$ 2); shared=$ 5; buffers=$ 6; cache=$ 6; available=($ 6+$ 7); pavailable=(($ 6+$ 7)*100/$ 2); } $ 1 == "Mem:" { if("$1" == "") {printf("%.0f", total )} else {printf("%.0f", $1 "" )} }'
+    UserParameter=ct.memory.size[*],free -b | awk '$ 1 == "Mem:" {total=$ 2; used=($ 3+$ 5); pused=(($ 3+$ 5)*100/$ 2); free=$ 4; pfree=($ 4*100/$ 2); shared=$ 5; buffers=$ 6; cache=$ 6; available=($ 6+$ 7); pavailable=(($ 6+$ 7)*100/$ 2); if("$1" == "") {printf("%.0f", total )} else {printf("%.0f", $1 "" )} }'
 
 Add another one for retrieve swap information:
 
-    UserParameter=ct.swap.size[*],free -b | awk '{total=$ 2; used=$ 3; free=$ 4; pfree=($ 4*100/$ 2); pused=($ 3*100/$ 2)}{ if("$1" == "") } $ 1 == "Swap:" { if("$1" == "") {printf("%.0f", free )} else {printf("%.0f", $1 "" )} }'
+    UserParameter=ct.swap.size[*],free -b | awk '$ 1 == "Swap:" {total=$ 2; used=$ 3; free=$ 4; pfree=($ 4*100/$ 2); pused=($ 3*100/$ 2); if("$1" == "") {printf("%.0f", free )} else {printf("%.0f", $1 "" )} }'
 
 Add another one for retrieve right CPU load information:
 
