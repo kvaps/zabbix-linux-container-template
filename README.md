@@ -35,7 +35,7 @@ This is the path to add the new user parameter.
 
 ```
   ls /etc/zabbix/zabbix_agentd.conf.d/
-  zabbix_container.conf
+  zabbix_container.conf 
 ```
 
 Add user parameter for retrieve memory information:
