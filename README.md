@@ -20,6 +20,24 @@ because old one have different output format.
 
 Edit `/etc/zabbix/zabbix_agentd.d/zabbix_container.conf`:
 
+NOTE: Depending on the OS that you are working with, the path could change.
+
+Please verify in `/etc/zabbix/zabbix_agentd.conf` the "include" path.
+
+Example With Debian 12
+
+```
+  cat /etc/zabbix/zabbix_agentd.conf | grep ^Include
+  Include=/etc/zabbix/zabbix_agentd.conf.d/*.conf
+```
+
+This is the path to add the new user parameter. 
+
+```
+  ls /etc/zabbix/zabbix_agentd.conf.d/
+  zabbix_container.conf 
+```
+
 Add user parameter for retrieve memory information:
 
     UserParameter=ct.memory.size[*],free -b | awk '$ 1 == "Mem:" {total=$ 2; used=($ 3+$ 5); pused=(($ 3+$ 5)*100/$ 2); free=$ 4; pfree=($ 4*100/$ 2); shared=$ 5; buffers=$ 6; cache=$ 6; available=($ 6+$ 7); pavailable=(($ 6+$ 7)*100/$ 2); if("$1" == "") {printf("%.0f", total )} else {printf("%.0f", $1 "" )} }'
