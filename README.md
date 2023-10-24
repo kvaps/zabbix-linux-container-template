@@ -6,7 +6,7 @@ collected worng without calculating buffers and cache memory.<br> Zabbix have
 [bug
 report]([https://support.zabbix.com/browse/ZBX-12164](https://support.zabbix.com/browse/ZBX-12164)),
 but it seems that no one don’t want to fix it soon.<br> So let’s fix it together
-byself.
+by ourselves.
 
 First we need to create new user parameter for zabbix, I used `ct.memory.size`
 name similarly built-in `vm.memory.size` parameter, but with my own single line
@@ -74,6 +74,13 @@ It will provide you support for next parameters:
     ct.cpu.load[percpu,avg5]
     ct.cpu.load[percpu,avg15]
 
+Now add aliases to make the new/correct data available under the standard item names:
+
+    Alias=vm.memory.size:ct.memory.size
+    Alias=system.swap.size:ct.swap.size
+    Alias=system.cpu.load:ct.cpu.load
+    Alias=system.uptime:ct.uptime
+
 Don’t forget to restart `zabbix-agent.service` after
 
 Ok, now we can check is our parameter working from zabbix server:
@@ -81,26 +88,12 @@ Ok, now we can check is our parameter working from zabbix server:
     $ zabbix_get -s <container_ip> -k ct.memory.size[available]
     1709940736
 
+This new value should now also be available under the standard name:
+
+    $ zabbix_get -s <container_ip> -k vm.memory.size[available]
+    1709940736
+
 Ok it’s working.
-
-Now let’s configure zabbix for use them. In Zabbix Interface:
-
-Go Configuration → Templtes
-
-* Make full copy “Template OS Linux” to “Template Linux Container”
-* Open “Template Linux Container” → Items
-* Replace all `vm.memory.size` items to `ct.memory.size`.
-* Replace all `system.swap.size` items to `ct.swap.size`:<br> You also need to
-remove commas in key filed here. Example:<br> replace `system.swap.size[,free]`
-to `ct.swap.size[free]`
-* Replace all `system.cpu.load[percpu,*]` items to `ct.cpu.load[percpu,*]`.
-
-Or just download and import [my zabbix template](https://github.com/kvaps/zabbix-linux-container-template/blob/master/zbx_linux_container_template.xml).
-
-Next, go to the Configuration → Hosts
-
-* Unlink and clear “Template OS Linux” from your hosts
-* Attach “Template Linux Container”
 
 Wait some time and check the graphics:
 
