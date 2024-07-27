@@ -1,8 +1,11 @@
 # Zabbix: solve memory monitoring issue inside LXC containers
 
-Zabbix have some problems with memory collecting from cgroups limited
-containers.<br> If you using Promxox, you know what I mean: The available memory
-collected worng without calculating buffers and cache memory.<br> Zabbix have
+Zabbix-agent (NOT zabbix-agent2) has some problems with memory collecting from cgroups limited 
+containers.<br> If you are using Proxmox, you know what I mean: The available memory
+is collected wrongly without calculating buffers and cache memory.
+
+<br> Note: This issue only affects zabbix-agent and has been fixed in zabbix-agent2.<br>
+<br> Zabbix have
 [bug
 report]([https://support.zabbix.com/browse/ZBX-12164](https://support.zabbix.com/browse/ZBX-12164)),
 but it seems that no one don’t want to fix it soon.<br> So let’s fix it together
